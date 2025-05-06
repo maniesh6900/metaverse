@@ -1,0 +1,1 @@
+{"root":["./src/app.ts","./src/index.ts","./src/controller/admin-controller.ts","./src/controller/user-controller.ts","./src/middleware/user-middleware.ts","./src/routes/admin-router.ts","./src/routes/user-router.ts","./src/types/index.ts","./src/utils/apierror.ts","./src/utils/apiresponse.ts","./src/utils/asynchandler.ts"],"version":"5.8.2"}
