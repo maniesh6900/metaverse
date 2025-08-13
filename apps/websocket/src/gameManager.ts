@@ -9,25 +9,26 @@ export class RoomManger {
         this.rooms = new Map();
     }
     static getInstance() {
-        if(!this.instance) {
+        if (!this.instance) {
             this.instance = new RoomManger();
         }
         return this.instance;
     }
-    public removeUser(user : User, spaceId : string) {
-        if(!this.rooms.has(spaceId)) {
-           return;
+
+    public removeUser(user: User, spaceId: string) {
+        if (!this.rooms.has(spaceId)) {
+            return;
         }
-        this.rooms.set(spaceId, (this.rooms.get(spaceId))?.filter((u)=> u.id !== user.id) ?? []);
+        this.rooms.set(spaceId, (this.rooms.get(spaceId))?.filter((u) => u.id !== user.id) ?? []);
     }
-    public addUser(user : User, spaceId : string) {
-        if(!this.rooms.has(spaceId)) {
+    public addUser(user: User, spaceId: string) {
+        if (!this.rooms.has(spaceId)) {
             this.rooms.set(spaceId, [user]);
             return;
         }
         this.rooms.set(spaceId, [...(this.rooms.get(spaceId)) ?? [], user]);
     }
-     public broadcast(message: OutgoingMessage, user: User, roomId: string) {
+    public broadcast(message: OutgoingMessage, user: User, roomId: string) {
         if (!this.rooms.has(roomId)) {
             return;
         }
@@ -37,5 +38,4 @@ export class RoomManger {
             }
         });
     }
-
 }
