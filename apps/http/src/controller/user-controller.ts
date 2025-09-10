@@ -72,5 +72,25 @@ export const Usesignin = asyncHandler(async (req : Request, res : Response) => {
 
     res
     .cookie("token", token, {secure : true, httpOnly : true})
-    .json(new APiResponse(200, {user}, "User logged in successfully"));
+    .json(new APiResponse(200, {user: user, token}, "User logged in successfully"));
+});
+
+export const getSpaceById = asyncHandler(async (req : Request, res : Response) => {
+    const spaceid = req.params.id;
+    
+    if(spaceid == undefined) {
+        throw new ApiError(411, "space id is undefined");
+    }
+
+    const space = await client.space.findFirst({
+        where : {
+            id : spaceid,
+        },
+    });
+
+    if(space) {
+        res
+        .json(new APiResponse(200, {space}, "fatch succefully"));
+    }
+    
 });

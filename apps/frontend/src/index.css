@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+/* Custom colors for house elements */
+.bg-brown-600 {
+    background-color: #8B4513;
+}
+
+.bg-brown-800 {
+    background-color: #654321;
+}
+
+.border-brown-600 {
+    border-color: #8B4513;
+}
+
+.border-brown-800 {
+    border-color: #654321;
+}
+
+/* Custom message box animation */
+.message-box {
+    transition: transform 0.3s ease-in-out;
+}
+
+.message-box.show {
+    transform: translateX(0);
+}
+
+/* Player hover effects */
+.player-avatar {
+    transition: all 0.2s ease-in-out;
+}
+
+.player-avatar:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Game area styling */
+.game-area {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+}
+
+/* House background elements */
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .game-area {
+        height: 300px;
+    }
+}

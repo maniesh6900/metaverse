@@ -35,12 +35,14 @@ export class User {
     initHandler() {
         this.ws.on("message", async (data) => {
             const msg = JSON.parse(data.toString());
+            // console.log(msg);
+            // console.log( this.id);
+            
             switch (msg.type) {
                 case "join":
                     const { token } = msg.payload;
                     const { spaceId } = msg.payload;
                     const { userId } = (jwt.verify(token, JWT_secret) as JwtPayload);
-                    console.log(msg);
                     if (!userId) {
                         this.ws.close();
                         return;
@@ -62,16 +64,17 @@ export class User {
                     this.send({
                         type: "joined",
                         payload: {
+                            userId : this.id,
                             x: this.x,
                             y: this.y,
                         },
                         user: RoomManger.getInstance().rooms.get(spaceId)?.filter(x => x.id !== this.id)?.map((u) => ({ id: u.id })) ?? [],
                     });
-
+                    
                     RoomManger.getInstance().broadcast({
-                        type: "space-joined",
+                        type: "user-joined",
                         payload: {
-                            userId: this.userId,
+                            userId: this.id,
                             x: this.x,
                             y: this.y,
                         },
@@ -80,28 +83,29 @@ export class User {
                 case "move":
                     const moveX = msg.payload.x;
                     const moveY = msg.payload.y;
-                    const xDisplacement = Math.abs(this.x - moveX)
-                    const yDisplacement = Math.abs(this.x - moveY)
+                    const xDisplacement = Math.abs(this.x - moveX);
+                    const yDisplacement = Math.abs(this.y - moveY);
                     if ((xDisplacement == 1 && yDisplacement == 0) || (xDisplacement == 0 && yDisplacement == 1)) {
                         this.x = moveX;
                         this.y = moveY;
                         RoomManger.getInstance().broadcast({
                             type: "movement",
                             payload: {
-                                x: this.x,
-                                y: this.y
-                            }
-                        }, this, this.spaceId!);
+                                userId: this.id,
+                                x: moveX,
+                                y: moveY,
+                            },
+                        }, this, this.spaceId);
                         return;
-
-                    }
+                    } 
                     this.send({
                         type: "movement-rejected",
                         payload: {
                             x: this.x,
-                            y: this.y
-                        }
+                            y: this.y,
+                        },
                     });
+                    
                     break;
                 case "disconnect":
                     this.ws.close();
