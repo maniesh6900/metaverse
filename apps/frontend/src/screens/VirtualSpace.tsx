@@ -24,7 +24,7 @@ const Arena = () => {
   const wsRef = useRef<any>(null);
   const [currentUser, setCurrentUser] = useState<any>({});
   const [users, setUsers] = useState(new Map());
-  const [params, setParams] = useState({ token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjbWUxMWJybHUwMDAwdWZlNDN6OGlidWxvIiwiaWF0IjoxNzU3MTA2MzEzfQ.1qRuhXuJiwKOjLxFDRfQmuDtWXLsV8YvDkLxHEJuzuc", spaceId:  param.spaceid});
+  const [params, setParams] = useState({ token: import.meta.env.TOKEN, spaceId:  param.spaceid});
 
   const [limits, setLimits] = useState({ x: 0, y: 0 });
   const [camera, setCamera] = useState({ x: 0, y: 0 });
